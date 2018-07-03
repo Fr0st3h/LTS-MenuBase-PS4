@@ -293,6 +293,7 @@ extern "C" void _main(void) {
 			}else{
 					monitorButtons();
 					drawMenu();
+					menuActions();
 				}
 				Ped playerPed = PLAYER::PLAYER_PED_ID();
 				Player player = PLAYER::PLAYER_ID();
