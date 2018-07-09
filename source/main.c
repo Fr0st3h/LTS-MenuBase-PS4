@@ -95,7 +95,7 @@ int _main(void) {
 	int sysUtil = sceKernelLoadStartModule("/system/common/lib/libSceSysUtil.sprx", 0, NULL, 0, 0, 0);
 	RESOLVE(sysUtil, sceSysUtilSendSystemNotificationWithText);
 
-	sysNotify("Payload loaded.\nPlease launch GTA V.");
+	sysNotify("LTS Menu Base loaded.\nPlease launch GTA V.");
 	gamePID = findProcess("eboot.bin");
 
 	sceKernelSleep(3);
@@ -110,7 +110,7 @@ int _main(void) {
 	while (!setupDone()) sceKernelSleep(3);
 
 	startExecution();
-	sysNotify("Mods activated.\nEnjoy!");
+	sysNotify("LTS MenuBase activated.\nMade By CMTFrosty!");
 
 	return 0;
 }
