@@ -49,14 +49,11 @@ void menuActions(){
     CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Up, true);
     CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Down, true);
     CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Right, true);
-    CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Left, true);
-    CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Right_2, true);
-    CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Left_2, true);
+    CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Dpad_Right, true);
     CONTROLS::DISABLE_CONTROL_ACTION(0, Button_Circle, true);
     CONTROLS::DISABLE_CONTROL_ACTION(0, Button_X, true);
-    CONTROLS::SET_INPUT_EXCLUSIVE(0, Button_Cirlce_2);
+    CONTROLS::SET_INPUT_EXCLUSIVE(0, Button_Circle);
     CONTROLS::SET_INPUT_EXCLUSIVE(0, Button_Dpad_Right);
-    CONTROLS::SET_INPUT_EXCLUSIVE(0, Button_Dpad_Left);
 }
 void OtherLoop(Player player,Ped ped){
 	if(PlayerOptions[0]){//GodMode
@@ -267,8 +264,7 @@ void drawMenu(){
 		DRAW_TEXT(buffer, PixelX(Menu_X), PixelY(75) + PixelY(30 * 20), 0.4, 0.4, 0, true, false, true, false, 240, 240, 240, 240);
 }
 extern "C" void _main(void) {
-	if (!init) {
-		initLibs();
+	if (!init) {		initLibs();
 		GenerateMenus();
 
 		init = true;
@@ -280,7 +276,7 @@ extern "C" void _main(void) {
 		frameCount = newFrameCount;
 		
 			if(!open)	{
-					if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Square) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Dpad_Right_2)){
+					if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Square) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Dpad_Right)){
 						playSound("YES");
 						SelectedIndexSize = 0.6;
 						CurrentMenuID = 0;
@@ -291,9 +287,9 @@ extern "C" void _main(void) {
 	
 					}
 			}else{
+					menuActions();
 					monitorButtons();
 					drawMenu();
-					menuActions();
 				}
 				Ped playerPed = PLAYER::PLAYER_PED_ID();
 				Player player = PLAYER::PLAYER_ID();

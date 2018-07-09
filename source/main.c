@@ -22,13 +22,9 @@ BOOL regionCheck() {
 	u64 gameCheck;
 	procReadBytes(gamePID, RegionCheckAddress, (void*)&gameCheck, sizeof(gameCheck));
 
-	if (gameCheck == USRegionBytes) {
-		sysNotify("US GTA V detected.");
-		hookAddress = USHookAddress;
-	}
-	else if (gameCheck == EURegionBytes) {
-		sysNotify("EU GTA V detected.");
-		hookAddress = EUHookAddress;
+	if (gameCheck == RegionBytes) {
+		sysNotify("GTA V detected.");
+		hookAddress = HookAddress;
 	}
 	else {
 		sysNotify("Failed to detect GTA V.");
@@ -95,7 +91,7 @@ int _main(void) {
 	int sysUtil = sceKernelLoadStartModule("/system/common/lib/libSceSysUtil.sprx", 0, NULL, 0, 0, 0);
 	RESOLVE(sysUtil, sceSysUtilSendSystemNotificationWithText);
 
-	sysNotify("LTS Menu Base loaded.\nPlease launch GTA V.");
+	sysNotify("LTS MenuBase loaded.\nPlease launch GTA V.");
 	gamePID = findProcess("eboot.bin");
 
 	sceKernelSleep(3);
@@ -110,7 +106,7 @@ int _main(void) {
 	while (!setupDone()) sceKernelSleep(3);
 
 	startExecution();
-	sysNotify("LTS MenuBase activated.\nMade By CMTFrosty!");
+	sysNotify("LTS MenuBase activated.\nBy CMTFrosty!");
 
 	return 0;
 }

@@ -3,12 +3,12 @@
 #include "types.h"
 #include <utility>
 
-struct Native_s {
-	struct Native_s *lastNativeTable;
-	u64 nativeFunctions[7];
-	u64 nativeCount;
-	u64 nativeHashes[7];
-};
+// struct Native_s {
+	// struct Native_s *lastNativeTable;
+	// u64 nativeFunctions[7];
+	// u64 nativeCount;
+	// u64 nativeHashes[7];
+// };
 
 struct NativeArg_s {
 	u64* returnValue;
