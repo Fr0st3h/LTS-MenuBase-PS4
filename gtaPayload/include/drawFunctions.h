@@ -1,7 +1,39 @@
 Color SelectColour = {214,19,19,255};
-
-
-
+enum ControlType
+{
+	con_Blank,
+	con_None,
+	con_Menu,
+	con_Jetpack,
+	con_vehRockets,
+	con_DriveTrain,
+	con_Fishing,
+	con_Pool,
+	con_vehBoost,
+	con_forgegun,
+	con_RGB_Select,
+	con_DrievOnWalls,
+	con_DriveFly,
+	con_vehJump,
+	con_vehStop,
+	con_vehHydraulics,
+	con_hostage,
+	con_GNT
+};
+ControlType CurrentControlType = con_None;
+enum RGBTypes
+{
+	RGB_Neon,
+	RGB_MenuColour,
+	RGB_VehiclePrimary,
+	RGB_VehicleSecondary,
+	RGB_VehicleSmoke
+};
+RGBTypes CurrentRGBType;
+bool CurrentRGBActive = false;
+float RGB_Left = 76;
+int RGB_PressDelay = 0;
+int RGB_Delay = 0;
 
 
 float PixelX(int Input)
@@ -80,4 +112,12 @@ void DrawOption(char* Option, int i, OptionType Type, bool Selected = false)
 		DRAW_SPRITE("mpleaderboard", "leaderboard_plus_icon", PixelX(Menu_X + 95), PixelY(90) + PixelY(30 * i), 0.03, 0.05, 0);
 	//else if (Type == Custom)
 		//DRAW_SPRITE(ImageMain, ImageAct, PixelX(Menu_X + 95), PixelY(90) + PixelY(30 * i), 0.03, 0.05, 0);
+}
+
+void GetRGB(RGBTypes RGBType)
+{
+	CurrentRGBType = RGBType;
+	CurrentRGBActive = true;
+	RGB_Delay = GAMEPLAY::GET_GAME_TIMER() + 100;
+	CurrentControlType = con_RGB_Select;
 }

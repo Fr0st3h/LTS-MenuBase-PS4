@@ -154,11 +154,104 @@ void SelectedOption(){
 #pragma region Menu3
 		case 3:
 		break;
+		case 4:
+		switch (CurrentSelectedIndex){
+			case 0:
+			Menu_X -= 50;
+			if (Menu_X < 147)
+				Menu_X = 1132;
+			break;
+		case 1:
+			Menu_X += 50;
+			if (Menu_X > 1132)
+				Menu_X = 147;
+			break;
+					case 2:
+			GetRGB(RGB_MenuColour);
+			break;
+		case 3:
+			SelectColour.r = 123;
+			SelectColour.g = 255;
+			SelectColour.b = 0;
+			ChangeOptionRadioChecked("Settings", "Green");
+			break;
+		case 4:
+			SelectColour.r = 159;
+			SelectColour.g = 19;
+			SelectColour.b = 214;
+			ChangeOptionRadioChecked("Settings", "Purple");
+			break;
+		case 5:
+			SelectColour.r = 19;
+			SelectColour.g = 123;
+			SelectColour.b = 214;
+			ChangeOptionRadioChecked("Settings", "Blue");
+			break;
+		case 6:
+			SelectColour.r = 214;
+			SelectColour.g = 19;
+			SelectColour.b = 100;
+			ChangeOptionRadioChecked("Settings", "Pink");
+			break;
+		case 7:
+			SelectColour.r = 214;
+			SelectColour.g = 19;
+			SelectColour.b = 19;
+			ChangeOptionRadioChecked("Settings", "Red");
+			break;
+		case 8:
+			SelectColour.r = 214;
+			SelectColour.g = 117;
+			SelectColour.b = 19;
+			ChangeOptionRadioChecked("Settings", "Orange");
+			break;
+		case 9:
+			SelectColour.r = 228;
+			SelectColour.g = 250;
+			SelectColour.b = 32;
+			ChangeOptionRadioChecked("Settings", "Yellow");
+			break;
+		}
+		break;
 
 	}
 }
-
+void monitorButtonsRGB(){
+	
+		if (CurrentRGBActive)
+		{
+			#pragma region RGB Custom Handling
+			if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Dpad_Left))
+			{
+				RGB_Left-= 0.2;
+				if (RGB_Left < 0)
+					RGB_Left = 153;
+			}
+			else if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, Button_Dpad_Right))
+			{
+				RGB_Left+= 0.2;
+				if (RGB_Left > 153)
+					RGB_Left = 0;
+			}
+			if(CONTROLS::IS_DISABLED_CONTROL_PRESSED(0,Button_Circle)){
+				CurrentRGBActive = false;
+				CurrentControlType = con_Menu;
+			}
+			if(CONTROLS::IS_DISABLED_CONTROL_PRESSED(0,Button_Square)){
+				CurrentRGBActive = false;
+				if (CurrentRGBType == RGB_MenuColour)
+					{
+						SelectColour.r = GetRFromI((int)RGB_Left);
+						SelectColour.g = GetGFromI((int)RGB_Left);
+						SelectColour.b = GetBFromI((int)RGB_Left);
+						ChangeOptionRadioChecked("Settings", "Custom RGB");
+					}
+					CurrentControlType = con_Menu;
+			}
+		}
+}
 void monitorButtons(){
+
 
 	if (CONTROLS::IS_DISABLED_CONTROL_JUST_PRESSED(0, Button_Dpad_Down)){
 				SelectedIndexSize = 0.4;
@@ -286,11 +379,22 @@ extern "C" void _main(void) {
 						open = true;
 	
 					}
-			}else{
+			}else if(open && !CurrentRGBActive){
 					menuActions();
 					monitorButtons();
 					drawMenu();
+				}else if (CurrentRGBActive){
+				monitorButtonsRGB();
+				GRAPHICS::DRAW_RECT(0.5, 0.5, 0.5, 0.05, 0, 0, 0, 200);
+				int NumberOfStates = 153;
+				float Width = 0.495 / NumberOfStates;
+				for (int i = 0; i < NumberOfStates; i++)
+					GRAPHICS::DRAW_RECT(0.255 + (Width * i), 0.5, Width, 0.04, GetRFromI(i), GetGFromI(i), GetBFromI(i), 200);
+
+				GRAPHICS::DRAW_RECT(0.255 + (Width * RGB_Left), 0.5, 0.01, 0.07, 0, 0, 0, 200);
+				GRAPHICS::DRAW_RECT(0.255 + (Width * RGB_Left), 0.5, 0.005, 0.065, GetRFromI((int)RGB_Left), GetGFromI((int)RGB_Left), GetBFromI((int)RGB_Left), 200);
 				}
+
 				Ped playerPed = PLAYER::PLAYER_PED_ID();
 				Player player = PLAYER::PLAYER_ID();
 				OtherLoop(player,playerPed);

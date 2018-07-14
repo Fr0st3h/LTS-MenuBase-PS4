@@ -105,6 +105,41 @@ void ClearMenuOptions(int MenuID)
 	for (int i = 0; i <= Menus[MenuID].Size; i++)
 		RemoveLastOption(MenuID);
 }
+void ChangeOptionRadioChecked(int MenuID, char* OptionName)
+{
+	for (int i = 0; i < Menus[MenuID].Size; i++)
+	{
+		if (Menus[MenuID].Options[i].Type == RadioChecked || Menus[MenuID].Options[i].Type == RadioUnChecked)
+		{
+			if (Menus[MenuID].Options[i].Name == OptionName)
+				Menus[MenuID].Options[i].Type = RadioChecked;
+			else
+				Menus[MenuID].Options[i].Type = RadioUnChecked;
+		}
+	}
+}
+void ChangeOptionRadioChecked(char* MenuName, char* OptionName)
+{
+	ChangeOptionRadioChecked(GetMenuIDFromName(MenuName), OptionName);
+}
+void ChangeOptionRadioChecked(int MenuID, int OptionID)
+{
+	for (int i = 0; i < Menus[MenuID].Size; i++)
+	{
+		if (Menus[MenuID].Options[i].Type == RadioChecked || Menus[MenuID].Options[i].Type == RadioUnChecked)
+		{
+			if (i == OptionID)
+				Menus[MenuID].Options[i].Type = RadioChecked;
+			else
+				Menus[MenuID].Options[i].Type = RadioUnChecked;
+		}
+	}
+}
+void ChangeOptionRadioChecked(char* MenuName, int OptionID)
+{
+	int MenuID = GetMenuIDFromName(MenuName);
+	ChangeOptionRadioChecked(MenuID, OptionID);
+}
 void ClearMenuOptions(char* MenuName)
 {
 	ClearMenuOptions(GetMenuIDFromName(MenuName));
@@ -153,6 +188,7 @@ void GenerateMenus()
 	CreateOption(MainMenu, "Player Options");
 	CreateOption(MainMenu, "Examples");
 	CreateOption(MainMenu, "Sub Menu 3");
+	CreateOption(MainMenu, "Settings");
 #pragma endregion
 
 #pragma region Player
@@ -184,6 +220,19 @@ void GenerateMenus()
 	CreateOption(SubMenu3, "Option 4", UnChecked);
 	CreateOption(SubMenu3, "Option 5", UnChecked);
 	CreateOption(SubMenu3, "Option 6", UnChecked);
+#pragma endregion
 
+#pragma region Settings
+	int Settings = CreateMenu("Settings");
+	CreateOption(Settings, "Move Menu Left");
+	CreateOption(Settings, "Move Menu Right");
+	CreateOption(Settings, "Custom RGB", RadioUnChecked);
+	CreateOption(Settings, "Green", RadioUnChecked);
+	CreateOption(Settings, "Purple", RadioUnChecked);
+	CreateOption(Settings, "Blue", RadioUnChecked);
+	CreateOption(Settings, "Pink", RadioUnChecked);
+	CreateOption(Settings, "Red", RadioUnChecked);
+	CreateOption(Settings, "Orange", RadioUnChecked);
+	CreateOption(Settings, "Yellow", RadioUnChecked);
 #pragma endregion
 }

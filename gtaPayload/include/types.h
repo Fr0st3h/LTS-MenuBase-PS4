@@ -415,6 +415,7 @@ enum Buttons {
 	Button_Dpad_Up = 27, //Scroll Up
 	Button_Dpad_Down = 19,//Scroll Down
 	Button_Dpad_Right = 190,//Part of Open
-	Button_Square = 22//Other Part of Open
+	Button_Square = 22,//Other Part of Open
+	Button_Dpad_Left = 174
 };
 
